@@ -1,0 +1,7 @@
+{
+  "name": "Beam",
+  "description": "A node.js app to upload remote URL to the Cloud",
+  "repository": "https://bitbucket.org/p_ca/beam",
+  "logo": "http://imgur.com/asdas.png",
+  "keywords": ["node", "beam", "socket.io"]
+}
