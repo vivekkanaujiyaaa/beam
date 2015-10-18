@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title>Beam - Upload to cloud instantly</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="css/bootstrap.min.css"/>
 	<link rel="stylesheet" href="css/main.css"/>
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
@@ -12,9 +13,28 @@
 	<div id="logo"></div>
 	<div id="addlink">
 		<div class="content-wrapper">
-			<input class="form-control" type="text" placeholder="Enter the URL..."/>
+			<div class="form-group">
+				<div class="input-group">
+					<input type="text" class="form-control" placeholder="Enter the URL..." id="link">
+					<span class="input-group-btn">
+						<button class="btn btn-default" id="addlink" type="button">Add link</button>
+					</span>
+				</div>
+			</div>
 		</div>
 	</div>
-	<div id="links"></div>
+	<div id="links">
+		<div class="content-wrapper">
+			<div id="link-panels">
+				<div class="panel panel-default">
+					<div class="panel-heading">Panel heading</div>
+					<div class="panel-body">
+						Panel Body
+					</div>
+					<div class="panel-heading">Panel Footer</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>
