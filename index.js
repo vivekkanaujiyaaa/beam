@@ -21,29 +21,48 @@ var cloudObj = function() {
 	this.downloadFile = function(onAdded, onData, onEnd, onError) {
 		console.log("Downloading file: "+this.URL);
 		var parsed = parse(this.URL, true);
-		var tmpFile = __dirname+"/tmp/"+parsed.pathName;
+		var tmpFile = __dirname+"/tmp/"+parsed.pathName,
+		cur = 0,
+		len = 0,
+		total = 0;
 
-		var request = http.get(this.URL, function(response) {
-			var len = parseInt(response.headers['content-length'], 10),
-			total = len/1048576,
-			cur = 0;
-
-			onAdded(parsed.pathName, total);
-			response.on("data", function (chunk) {
-				cur += chunk.length;
-				var percentComplete = (100.0 * cur / len).toFixed(2),
-				mbComplete = (cur / 1048576).toFixed(2);
-				onData(percentComplete, mbComplete);
-			});
-			response.on("end", function(){
-				onEnd(tmpFile);
-			});
-			request.on("error", function(err){
-				console.log("ERROR:"+err.message);
-				onError(err);
-			});
-			response.pipe(tmpFile);
+		var req = request({
+			method: 'GET',
+			uri: this.URL
 		});
+		req.on('data', function (chunk) {
+			cur += chunk.length;
+			var percentComplete = (100.0 * cur / len).toFixed(2),
+			mbComplete = (cur / 1048576).toFixed(2);
+			onData(percentComplete, mbComplete);
+		});
+		req.on('response', function(data){
+			var len = parseInt(data.headers['content-length'], 10);
+			total = len/1048576;
+			onAdded(parsed.pathName, total);
+		});
+		req.on('end', function() {
+			onEnd(tmpFile);
+		});
+		req.pipe(tmpFile);
+		// var request = http.get(this.URL, function(response) {
+		// 	var len = parseInt(response.headers['content-length'], 10),
+		// 	total = len/1048576,
+		// 	cur = 0;
+
+		// 	onAdded(parsed.pathName, total);
+		// 	response.on("data", function (chunk) {
+				
+		// 	});
+		// 	response.on("end", function(){
+				
+		// 	});
+		// 	request.on("error", function(err){
+		// 		console.log("ERROR:"+err.message);
+		// 		onError(err);
+		// 	});
+		// 	response.pipe(tmpFile);
+		// });
 		
 	};
 	this.uploadFile = function(tmpFile, onProgress, onComplete) {
