@@ -11,6 +11,7 @@ mega = require('mega'),
 request = require('request'),
 path = require('path'),
 http = require('http'),
+fs = require('fs'),
 crypto = require('crypto');
 
 var cloudObj = function() {
@@ -26,6 +27,7 @@ var cloudObj = function() {
 		len = 0,
 		total = 0;
 		console.log("Temporary File: "+tmpFile);
+		var wStream = fs.createWriteStream(tmpFile);
 		var req = request({
 			method: 'GET',
 			uri: this.URL
