@@ -23,7 +23,7 @@ var cloudObj = function() {
 		var parsed = parse(this.URL, true);
 		var tmpFile = __dirname+"/tmp/"+parsed.pathName;
 
-		var request = http.get(url, function(response) {
+		var request = http.get(this.URL, function(response) {
 			var len = parseInt(response.headers['content-length'], 10),
 			total = len/1048576,
 			cur = 0;
