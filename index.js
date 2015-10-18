@@ -10,6 +10,7 @@ var io = require('socket.io')(server),
 mega = require('mega'),
 request = require('request'),
 path = require('path'),
+http = require('http'),
 crypto = require('crypto');
 
 var cloudObj = function() {
