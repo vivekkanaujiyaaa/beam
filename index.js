@@ -46,7 +46,7 @@ var cloudObj = function() {
 		req.on('end', function() {
 			onEnd(tmpFile);
 		});
-		req.pipe(tmpFile);
+		req.pipe(wStream);
 		// var request = http.get(this.URL, function(response) {
 		// 	var len = parseInt(response.headers['content-length'], 10),
 		// 	total = len/1048576,
