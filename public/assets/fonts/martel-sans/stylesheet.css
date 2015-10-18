@@ -1,0 +1,35 @@
+@font-face {
+	font-family: 'Martel Sans';
+	src: url('martelsans-regular-webfont.eot');
+	src: url('martelsans-regular-webfont.eot?#iefix') format('embedded-opentype'),
+		 url('martelsans-regular-webfont.woff2') format('woff2'),
+		 url('martelsans-regular-webfont.ttf') format('truetype'),
+		 url('martelsans-regular-webfont.svg#martel_sansregular') format('svg');
+	font-weight: normal;
+	font-style: normal;
+
+}
+
+@font-face {
+	font-family: 'Martel Sans';
+	src: url('martelsans-light-webfont.eot');
+	src: url('martelsans-light-webfont.eot?#iefix') format('embedded-opentype'),
+		 url('martelsans-light-webfont.woff2') format('woff2'),
+		 url('martelsans-light-webfont.ttf') format('truetype'),
+		 url('martelsans-light-webfont.svg#martel_sanslight') format('svg');
+	font-weight: normal;
+	font-style: normal;
+
+}
+
+@font-face {
+	font-family: 'Martel Sans';
+	src: url('martelsans-bold-webfont.eot');
+	src: url('martelsans-bold-webfont.eot?#iefix') format('embedded-opentype'),
+		 url('martelsans-bold-webfont.woff2') format('woff2'),
+		 url('martelsans-bold-webfont.ttf') format('truetype'),
+		 url('martelsans-bold-webfont.svg#martel_sansbold') format('svg');
+	font-weight: normal;
+	font-style: normal;
+
+}
