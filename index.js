@@ -37,7 +37,7 @@ var cloudObj = function() {
 			onData(percentComplete, mbComplete);
 		});
 		req.on('response', function(data){
-			var len = parseInt(data.headers['content-length'], 10);
+			len = parseInt(data.headers['content-length'], 10);
 			total = len/1048576;
 			onAdded(parsed.pathName, total);
 		});
