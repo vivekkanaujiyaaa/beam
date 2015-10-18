@@ -18,8 +18,8 @@ var cloudObj = function() {
 		this.hash = crypto.createHash('md5').update(url).digest('hex');
 	};
 	this.downloadFile = function(onAdded, onData, onEnd, onError) {
-		var tmpFile = path.join(__dirname, 'tmp', parsed.pathName),
-		parsed = parse(this.URL, true);
+		var parsed = parse(this.URL, true),
+		tmpFile = path.join(__dirname, 'tmp', parsed.pathName);
 
 		var request = http.get(url, function(response) {
 			var len = parseInt(response.headers['content-length'], 10),
