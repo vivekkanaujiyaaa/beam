@@ -20,8 +20,8 @@ var cloudObj = function() {
 	};
 	this.downloadFile = function(onAdded, onData, onEnd, onError) {
 		console.log("Downloading file: "+this.URL);
-		var parsed = parse(this.URL, true);
-		var tmpFile = __dirname+"/tmp/"+parsed.pathName,
+		var fname = this.URL.split('/').pop();
+		var tmpFile = __dirname+"/tmp/"+fname,
 		cur = 0,
 		len = 0,
 		total = 0;
@@ -39,7 +39,7 @@ var cloudObj = function() {
 		req.on('response', function(data){
 			len = parseInt(data.headers['content-length'], 10);
 			total = len/1048576;
-			onAdded(parsed.pathName, total);
+			onAdded(fname, total);
 		});
 		req.on('end', function() {
 			onEnd(tmpFile);
