@@ -40,7 +40,7 @@ var cloudObj = function() {
 		});
 		req.on('response', function(data){
 			len = parseInt(data.headers['content-length'], 10);
-			total = len/1048576;
+			total = (len/1048576).toFixed(2);
 			onAdded(fname, total);
 		});
 		req.on('end', function() {
@@ -138,8 +138,9 @@ io.on('connection', function(socket){
 	});
 
 	socket.on('deletelink', function(msg){
+		var cHash = msg.hash;
 		CloudManager.deletelink(msg.hash);
-		socket.emit('linkdeleted', { message:"deleted", hash:msg.hash});
+		socket.emit('linkdeleted', { message:"deleted", hash:cHash});
 	});
 });
 
