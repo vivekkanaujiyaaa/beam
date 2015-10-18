@@ -25,7 +25,7 @@ var cloudObj = function() {
 		cur = 0,
 		len = 0,
 		total = 0;
-
+		console.log("Temporary File: "+tmpFile);
 		var req = request({
 			method: 'GET',
 			uri: this.URL
