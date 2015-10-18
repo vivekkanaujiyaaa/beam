@@ -12,12 +12,12 @@ request = require('request'),
 path = require('path'),
 crypto = require('crypto');
 
-var cloudObj = {
-	init: function(url) {
+var cloudObj = function() {
+	this.init =  function(url) {
 		this.URL = url;
 		this.hash = crypto.createHash('md5').update(url).digest('hex');
-	},
-	downloadFile: function(onAdded, onData, onEnd, onError) {
+	};
+	this.downloadFile = function(onAdded, onData, onEnd, onError) {
 		var tmpFile = path.join(__dirname, 'tmp', parsed.pathName),
 		parsed = parse(this.URL, true);
 
@@ -43,8 +43,8 @@ var cloudObj = {
 			response.pipe(tmpFile);
 		});
 		
-	},
-	uploadFile: function(tmpFile, onProgress, onComplete) {
+	};
+	this.uploadFile = function(tmpFile, onProgress, onComplete) {
 		var storage = mega({email:'pcaeu1@hrku.cf', password:'bmsce123', keepalive: false}),
 		fname = path.basename(tmpFile),
 		fsize = fs.statSync(tmpFile).size;
@@ -61,7 +61,7 @@ var cloudObj = {
 			onComplete();
 		});
 		fs.createReadStream(tmpFile).pipe(up);
-	}
+	};
 },
 cloudObjManager = function() {
 	this.listOfObj = [];
