@@ -25,7 +25,9 @@ var cloudObj = function() {
 		var tmpFile = __dirname+"/tmp/"+fname,
 		cur = 0,
 		len = 0,
-		total = 0;
+		total = 0,
+		prev = 0;
+
 		console.log("Temporary File: "+tmpFile);
 		var wStream = fs.createWriteStream(tmpFile);
 		var req = request({
@@ -34,9 +36,13 @@ var cloudObj = function() {
 		});
 		req.on('data', function (chunk) {
 			cur += chunk.length;
-			var percentComplete = (100.0 * cur / len).toFixed(2),
+			var percentComplete = Math.floor(100.0 * cur / len),
 			mbComplete = (cur / 1048576).toFixed(2);
-			onData(percentComplete, mbComplete);
+			if(percentComplete-prev > 0)
+			{
+				prev = percentComplete;
+				onData(percentComplete, mbComplete);
+			}
 		});
 		req.on('response', function(data){
 			len = parseInt(data.headers['content-length'], 10);
@@ -70,15 +76,20 @@ var cloudObj = function() {
 	this.uploadFile = function(tmpFile, onProgress, onComplete) {
 		var storage = mega({email:'pcaeu1@hrku.cf', password:'bmsce123', keepalive: false}),
 		fname = path.basename(tmpFile),
-		fsize = fs.statSync(tmpFile).size;
+		fsize = fs.statSync(tmpFile).size,
+		prev = 0;
+
 		var up = storage.upload({
 			name: fname,
 			size: fsize // removing this causes data buffering.
 		});
 		up.on('progress', function(stats){
-			var percentComplete = (100.0 * stats.bytesLoaded/fsize).toFixed(2),
+			var percentComplete = Math.floor(100.0 * stats.bytesLoaded/fsize),
 			mbComplete = (stats.bytesLoaded/1048576).toFixed(2);
-			onProgress(percentComplete, mbComplete);
+			if(percentComplete-prev > 0) {
+				onProgress(percentComplete, mbComplete);
+				prev = percentComplete;
+			}
 		});
 		up.on('complete', function(){
 			fs.unlink(tmpFile);
