@@ -54,10 +54,10 @@ var cloudObj = function() {
 
 		// 	onAdded(parsed.pathName, total);
 		// 	response.on("data", function (chunk) {
-				
+
 		// 	});
 		// 	response.on("end", function(){
-				
+
 		// 	});
 		// 	request.on("error", function(err){
 		// 		console.log("ERROR:"+err.message);
@@ -65,7 +65,7 @@ var cloudObj = function() {
 		// 	});
 		// 	response.pipe(tmpFile);
 		// });
-		
+
 	};
 	this.uploadFile = function(tmpFile, onProgress, onComplete) {
 		var storage = mega({email:'pcaeu1@hrku.cf', password:'bmsce123', keepalive: false}),
@@ -81,6 +81,7 @@ var cloudObj = function() {
 			onProgress(percentComplete, mbComplete);
 		});
 		up.on('complete', function(){
+			fs.unlink(tmpFile);
 			onComplete();
 		});
 		fs.createReadStream(tmpFile).pipe(up);
