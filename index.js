@@ -84,7 +84,9 @@ var cloudObj = function() {
 			fs.unlink(tmpFile);
 			onComplete();
 		});
-		fs.createReadStream(tmpFile).pipe(up);
+		fs.createReadStream(tmpFile, {
+			'bufferSize': 4 * 1024
+		}).pipe(up);
 	};
 },
 cloudObjManager = function() {
