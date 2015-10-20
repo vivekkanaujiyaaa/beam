@@ -77,6 +77,9 @@ var cloudObj = function() {
 			fs.unlink(tmpFile);
 			onComplete();
 		});
+		up.on('error', function(e){
+			console.log(e.message);
+		});
 		fs.createReadStream(tmpFile, {
 			'bufferSize': 4 * 1024
 		}).pipe(up);
