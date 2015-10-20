@@ -50,28 +50,10 @@ var cloudObj = function() {
 			onAdded(fname, total);
 		});
 		req.on('end', function() {
+			global.gc();
 			onEnd(tmpFile);
 		});
 		req.pipe(wStream);
-		// var request = http.get(this.URL, function(response) {
-		// 	var len = parseInt(response.headers['content-length'], 10),
-		// 	total = len/1048576,
-		// 	cur = 0;
-
-		// 	onAdded(parsed.pathName, total);
-		// 	response.on("data", function (chunk) {
-
-		// 	});
-		// 	response.on("end", function(){
-
-		// 	});
-		// 	request.on("error", function(err){
-		// 		console.log("ERROR:"+err.message);
-		// 		onError(err);
-		// 	});
-		// 	response.pipe(tmpFile);
-		// });
-
 	};
 	this.uploadFile = function(tmpFile, onProgress, onComplete) {
 		var storage = mega({email:'pcaeu1@hrku.cf', password:'bmsce123', keepalive: false}),
