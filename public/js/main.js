@@ -38,7 +38,7 @@ $(document).ready(function(){
 		console.log(msg.message);
 	});
 	socket.on('linkuploadprogress', function(msg){
-		var fdetails = msg.message.match(/(.*?) \% of (.*?)MB at (.*?) (\d+)s/),
+		var fdetails = msg.message.split('#')[1].match(/(.*?) \% of (.*?)MB at (.*?) (\d+)s/),
 		fcomp = parseInt(fdetails[1])*parseInt[2]/100;
 		$("#"+msg.hash+" #upload-progress-label").text(fcomp+" MB/"+fdetails[2]+" MB ("+fdetails[1]+"%)");
 		$("#"+msg.hash+" .progress-bar").css("width", fdetails[1]+"%");
