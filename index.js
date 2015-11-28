@@ -140,7 +140,7 @@ io.on('connection', function(socket){
 			socket.emit('linkdownloadprogress',{message:"Download Progress", hash:c.hash, pComplete:pc,mComplete:mc});
 		}, function(file) {
 			socket.emit('linkdownloadcomplete',{message:"Download Complete", hash:c.hash});
-			c.uploadFile(file, function(pc,mc){
+			c.uploadFile(file, function(data){
 				socket.emit('linkuploadprogress',{message:data, hash: c.hash});
 			}, function(data) {
 				socket.emit('linkuploaderror', {message: data, hash: c.hash});
