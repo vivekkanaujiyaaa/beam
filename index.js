@@ -60,13 +60,15 @@ var cloudObj = function() {
 		child = spawn('megacmd', ['put',tmpFile,'mega:/']);
 
 		child.stdout.on('data', function (data) { 
-			onProgress(data); 
+			onProgress(data);
+			console.log(data);
 		});
 		child.stdout.on('end', function () { 
 			onComplete(); 
 		});
 
 		child.stderr.on('data', function(data) {
+			console.log(data);
 			onErr(data);
 			onComplete();
 			return;
