@@ -55,34 +55,49 @@ var cloudObj = function() {
 		});
 		req.pipe(wStream);
 	};
-	this.uploadFile = function(tmpFile, onProgress, onComplete) {
-		var storage = mega({email:'pcaeu1@hrku.cf', password:'bmsce123', keepalive: false}),
-		fname = path.basename(tmpFile),
-		fsize = fs.statSync(tmpFile).size,
-		prev = 0;
+	this.uploadFile = function(tmpFile, onProgress, onErr, onComplete) {
+		var spawn = require('child_process').spawn,
+		child = spawn('megacmd', ['put',tmpFile,'mega:/']);
 
-		var up = storage.upload({
-			name: fname,
-			size: fsize // removing this causes data buffering.
+		child.stdout.on('data', function (data) { 
+			onProgress(data); 
 		});
-		up.on('progress', function(stats){
-			var percentComplete = Math.floor(100.0 * stats.bytesLoaded/fsize),
-			mbComplete = (stats.bytesLoaded/1048576).toFixed(2);
-			if(percentComplete-prev > 0) {
-				onProgress(percentComplete, mbComplete);
-				prev = percentComplete;
-			}
+		child.stdout.on('end', function () { 
+			onComplete(); 
 		});
-		up.on('complete', function(){
-			fs.unlink(tmpFile);
+
+		child.stderr.on('data', function(data) {
+			onErr(data);
 			onComplete();
+			return;
 		});
-		up.on('error', function(e){
-			console.log(e.message);
-		});
-		fs.createReadStream(tmpFile, {
-			'bufferSize': 4 * 1024
-		}).pipe(up);
+		// var storage = mega({email:'pcaeu1@hrku.cf', password:'bmsce123', keepalive: false}),
+		// fname = path.basename(tmpFile),
+		// fsize = fs.statSync(tmpFile).size,
+		// prev = 0;
+
+		// var up = storage.upload({
+		// 	name: fname,
+		// 	size: fsize // removing this causes data buffering.
+		// });
+		// up.on('progress', function(stats){
+		// 	var percentComplete = Math.floor(100.0 * stats.bytesLoaded/fsize),
+		// 	mbComplete = (stats.bytesLoaded/1048576).toFixed(2);
+		// 	if(percentComplete-prev > 0) {
+		// 		onProgress(percentComplete, mbComplete);
+		// 		prev = percentComplete;
+		// 	}
+		// });
+		// up.on('complete', function(){
+		// 	fs.unlink(tmpFile);
+		// 	onComplete();
+		// });
+		// up.on('error', function(e){
+		// 	console.log(e.message);
+		// });
+		// fs.createReadStream(tmpFile, {
+		// 	'bufferSize': 4 * 1024
+		// }).pipe(up);
 	};
 },
 cloudObjManager = function() {
@@ -126,7 +141,9 @@ io.on('connection', function(socket){
 		}, function(file) {
 			socket.emit('linkdownloadcomplete',{message:"Download Complete", hash:c.hash});
 			c.uploadFile(file, function(pc,mc){
-				socket.emit('linkuploadprogress',{message:"Upload Progress", hash:c.hash, pComplete:pc,mComplete:mc});
+				socket.emit('linkuploadprogress',{message:data, hash: c.hash});
+			}, function(data) {
+				socket.emit('linkuploaderror', {message: data, hash: c.hash});
 			}, function() {
 				socket.emit('linkuploadcomplete',{message:"Upload Complete", hash:c.hash});
 			});

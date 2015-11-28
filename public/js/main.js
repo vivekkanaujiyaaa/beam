@@ -31,13 +31,17 @@ $(document).ready(function(){
 		$("#"+msg.hash+" #download-progress-label").removeClass("label-primary").addClass("label-default");
 		$("#"+msg.hash+" .progress-bar").addClass("progress-bar-warning");
 	});
+	socket.on('linkuploaderror', function(msg){
+		console.log(msg.message);
+	});
 	socket.on('linkerror', function(msg){
 		console.log(msg.message);
 	});
 	socket.on('linkuploadprogress', function(msg){
-		var fsize = $("#"+msg.hash).attr("size");
-		$("#"+msg.hash+" #upload-progress-label").text(msg.mComplete+" MB/"+fsize+" MB ("+msg.pComplete+"%)");
-		$("#"+msg.hash+" .progress-bar").css("width", msg.pComplete+"%");
+		var fdetails = msg.message.match(/(.*?) \% of (.*?)MB at (.*?) (\d+)s/),
+		fcomp = parseInt(fdetails[1])*parseInt[2]/100;
+		$("#"+msg.hash+" #upload-progress-label").text(fcomp+" MB/"+fdetails[2]+" MB ("+fdetails[1]+"%)");
+		$("#"+msg.hash+" .progress-bar").css("width", fdetails[1]+"%");
 	});
 	socket.on('linkuploadcomplete', function(msg){
 		$("#"+msg.hash+" #upload-progress-label").removeClass("label-warning").addClass("label-default");
