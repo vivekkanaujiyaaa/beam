@@ -64,8 +64,8 @@ var cloudObj = function() {
 			console.log("Spawn child stdout:"+ data.toString());
 		});
 		child.stdout.on('end', function () {
-			onComplete();
 			fs.unlink(tmpFile);
+			onComplete();
 		});
 
 		child.stderr.on('data', function(data) {
