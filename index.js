@@ -72,7 +72,6 @@ var cloudObj = function() {
 			console.log("Spawn child error:"+ data.toString());
 			onErr(data.toString());
 			onComplete();
-			fs.unlink(tmpFile);
 			return;
 		});
 		// var storage = mega({email:'pcaeu1@hrku.cf', password:'bmsce123', keepalive: false}),
