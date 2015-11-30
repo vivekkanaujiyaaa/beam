@@ -39,7 +39,8 @@ $(document).ready(function(){
 	});
 	socket.on('linkuploadprogress', function(msg){
 		var fdetails = msg.message.split('#')[1].match(/(.*?) \% of (.*?)MB at (.*?) (\d+)s/),
-		fcomp = Math.round(fdetails[1])*parseInt(fdetails[2])/100;
+		mbc = $("#download-progress-label").text().match(/(.*?)MB\/(.*?)MB/)[2],
+		fcomp = Math.round(fdetails[1])*parseInt(mbc)/100;
 		$("#"+msg.hash+" #upload-progress-label").text(fcomp+" MB/"+fdetails[2]+" MB ("+Math.round(fdetails[1])+"%)");
 		$("#"+msg.hash+" .progress-bar").css("width", Math.round(fdetails[1])+"%");
 	});
