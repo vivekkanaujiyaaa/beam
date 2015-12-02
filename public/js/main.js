@@ -39,9 +39,9 @@ $(document).ready(function(){
 	});
 	socket.on('linkuploadprogress', function(msg){
 		var fdetails = msg.message.split('#')[1].match(/(.*?) \% of (.*?) at /),
-		mbc = $("#download-progress-label").text().match(/(.*?)MB\/(.*?)MB/)[2],
-		fcomp = Math.round(fdetails[1])*parseInt(mbc)/100;
-		$("#"+msg.hash+" #upload-progress-label").text(fcomp+" MB/"+fdetails[2]+" MB ("+Math.round(fdetails[1])+"%)");
+		mbc = $("#"+msg.hash+" #download-progress-label").text().match(/(.*?)MB\/(.*?)MB/),
+		fcomp = Math.round(fdetails[1])*parseInt(mbc[2])/100;
+		$("#"+msg.hash+" #upload-progress-label").text(fcomp+" MB/"+mbc[2]+" MB ("+Math.round(fdetails[1])+"%)");
 		$("#"+msg.hash+" .progress-bar").css("width", Math.round(fdetails[1])+"%");
 	});
 	socket.on('linkuploadcomplete', function(msg){

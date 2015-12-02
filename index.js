@@ -7,7 +7,6 @@ server = app.listen(appPort, function() {
 parse = require('url-parse');
 
 var io = require('socket.io')(server),
-mega = require('mega'),
 request = require('request'),
 path = require('path'),
 http = require('http'),
