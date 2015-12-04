@@ -1,8 +1,12 @@
 {
-    "User" : "avee@mailed.ro",
+    "User" : "omih@mailfs.com",
     "Password" : "bmsce123",
     "DownloadWorkers" : 4,
     "UploadWorkers" : 4,
     "SkipSameSize" : true,
-    "Verbose" : 1
+    "Verbose" : 1,
+    "Previous": [
+        "avee@mailed.ro",
+        "sid@dx.awiki.org"
+    ]
 }
